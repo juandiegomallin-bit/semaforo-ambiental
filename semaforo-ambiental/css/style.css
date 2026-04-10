@@ -1,0 +1,415 @@
+/* ================================================================
+   ARCHIVO: style.css
+   PROYECTO: Semáforo Ambiental de la Huerta
+   INSTITUCIÓN: I.E. República de Uruguay – Medellín, Antioquia
+   DESCRIPCIÓN: Hoja de estilos principal para la página de
+                Login/Registro (index.html). Define colores,
+                layout del formulario, validaciones visuales,
+                medidor de fortaleza de contraseña y el panel
+                de usuarios registrados.
+   USO: Enlazado desde html/index.html
+   ÚLTIMA ACTUALIZACIÓN: 2026
+================================================================ */
+
+
+/* ════════════════════════════════════════════════════════════
+   1. VARIABLES DE COLOR (Custom Properties)
+   Se usan en todo el archivo para mantener consistencia
+════════════════════════════════════════════════════════════ */
+:root {
+    --color-primario: hsl(106, 86%, 25%);   /* Verde oscuro principal */
+    --color-fondo:    hsl(0, 0%, 100%);     /* Blanco puro para fondo */
+    --color-carta:    #hsl(135, 81%, 29%);  /* Verde medio para tarjetas */
+    --color-error:    #036922;              /* Verde para mensajes de error (personalizado) */
+    --color-exito:    #0a7a1d;              /* Verde para mensajes de éxito */
+    --radio-borde:    12px;                 /* Redondeo de bordes reutilizable */
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   2. RESET BÁSICO
+   Elimina márgenes, rellenos y establece box-sizing global
+════════════════════════════════════════════════════════════ */
+* {
+    box-sizing: border-box; /* Incluye borde y padding en el ancho total */
+    margin: 0;
+    padding: 0;
+}
+
+/* Cuerpo de la página con fuente y fondo base */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto); /* Nota: --color-texto no está definida arriba */
+    min-height: 100vh;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   3. CONTENEDOR PRINCIPAL DE LOGIN
+   Centra verticalmente la tarjeta con Flexbox
+════════════════════════════════════════════════════════════ */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* Centra horizontalmente */
+    justify-content: center;   /* Centra verticalmente */
+    min-height: 100vh;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Tarjeta blanca que contiene el formulario */
+.login-card {
+    background: var(--color-carta);
+    border-radius: var(--radio-borde);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, .12);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px; /* Ancho máximo para pantallas grandes */
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   4. PESTAÑAS LOGIN / REGISTRO
+   Selector visual para alternar entre formularios
+════════════════════════════════════════════════════════════ */
+.tab-switcher {
+    display: flex;
+    gap: 0;
+    margin-bottom: 28px;
+    background: #f0f2f5;   /* Fondo gris claro del contenedor */
+    border-radius: 10px;
+    padding: 4px;
+}
+
+/* Botón individual de pestaña */
+.tab-switcher .tab-btn {
+    flex: 1;               /* Ambas pestañas ocupan el mismo espacio */
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: .9rem;
+    font-weight: 600;
+    color: #777;           /* Color inactivo */
+    cursor: pointer;
+    transition: background .2s, color .2s, box-shadow .2s;
+}
+
+/* Estado activo de la pestaña seleccionada */
+.tab-switcher .tab-btn.active {
+    background: var(--color-primario); /* Verde del proyecto */
+    color: white;
+    box-shadow: 0 2px 8px rgba(108, 99, 255, .35);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   5. CABECERA DEL FORMULARIO
+════════════════════════════════════════════════════════════ */
+.login-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.login-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.login-header p {
+    color: #777;
+    font-size: .9rem;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   6. GRUPOS DE FORMULARIO
+   Cada grupo contiene: label + input + mensaje de error
+════════════════════════════════════════════════════════════ */
+.form-group {
+    margin-bottom: 18px;
+}
+
+/* Etiqueta del campo */
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: .85rem;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   7. CAMPOS DE ENTRADA (INPUTS)
+════════════════════════════════════════════════════════════ */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e0e0e0;   /* Borde gris por defecto */
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color .25s;
+}
+
+/* Efecto visual al hacer clic en el input */
+input:focus {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, .15); /* Aura de foco */
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   8. BOTÓN MOSTRAR / OCULTAR CONTRASEÑA
+   Posicionado absolutamente dentro del campo
+════════════════════════════════════════════════════════════ */
+.input-wrap {
+    position: relative; /* Necesario para el posicionamiento absoluto del botón */
+}
+
+/* Botones de ojo para los tres campos de contraseña */
+#togglePass,
+#toggleRegPass,
+#toggleRegPassConf {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%); /* Centrado vertical */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   9. BOTÓN DE ENVÍO
+════════════════════════════════════════════════════════════ */
+button[type="submit"] {
+    width: 100%;
+    padding: 13px;
+    background: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background .2s, transform .1s;
+}
+
+/* Cambio de color al pasar el cursor */
+button[type="submit"]:hover {
+    background: #5a52d5; /* Tono más oscuro del primario */
+}
+
+/* Efecto de presión al hacer clic */
+button[type="submit"]:active {
+    transform: scale(.97);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   10. MENSAJES DE ERROR BAJO LOS INPUTS
+════════════════════════════════════════════════════════════ */
+.error-msg {
+    color: var(--color-error);
+    font-size: .8rem;
+    margin-top: 4px;
+    display: block;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   11. ALERTAS GENERALES (ERROR / ÉXITO)
+   Aparecen encima del botón de envío
+════════════════════════════════════════════════════════════ */
+.alert {
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    font-size: .88rem;
+    display: none; /* Ocultas por defecto, JS las activa */
+}
+
+/* Alerta de error: fondo rojo claro */
+.alert.error {
+    background: #ffebee;
+    color: var(--color-error);
+    display: block;
+}
+
+/* Alerta de éxito: fondo verde claro */
+.alert.success {
+    background: #e8f5e9;
+    color: var(--color-exito);
+    display: block;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   12. MEDIDOR DE FORTALEZA DE CONTRASEÑA
+   Barra animada que cambia de color según la fortaleza
+════════════════════════════════════════════════════════════ */
+
+/* Contenedor de la barra */
+#fortaleza {
+    height: 5px;
+    background: #e0e0e0; /* Fondo gris cuando está vacía */
+    border-radius: 3px;
+    margin-top: 8px;
+}
+
+/* Barra de progreso interna (ancho controlado por JS) */
+#barraFuerza {
+    height: 100%;
+    width: 0%;
+    transition: width .3s, background .3s; /* Animación suave */
+    border-radius: 3px;
+    /* Colores posibles: rojo (débil), amarillo (regular), verde (fuerte) */
+}
+
+/* Texto descriptivo de la fortaleza */
+#textoFuerza {
+    font-size: .75rem;
+    margin-top: 4px;
+    display: block;
+    height: 16px; /* Altura fija para evitar saltos de layout */
+    color: #555;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   13. ENLACE PARA CAMBIAR DE PANEL
+════════════════════════════════════════════════════════════ */
+.switch-hint {
+    text-align: center;
+    font-size: .85rem;
+    color: #777;
+    margin-top: 16px;
+}
+
+.switch-hint a {
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.switch-hint a:hover {
+    text-decoration: underline;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   14. PANEL DE USUARIOS REGISTRADOS
+   Panel educativo/de práctica que lista usuarios en localStorage
+════════════════════════════════════════════════════════════ */
+.users-panel {
+    background: var(--color-carta);
+    border-radius: var(--radio-borde);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+    padding: 24px;
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Encabezado del panel */
+.users-panel h4 {
+    font-size: .95rem;
+    margin-bottom: 14px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Etiqueta "práctica" pequeña */
+.badge-storage {
+    background: rgba(108, 99, 255, .12);
+    color: var(--color-primario);
+    font-size: .7rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+/* Lista sin viñetas de usuarios */
+#listaUsuarios {
+    list-style: none;
+    margin-bottom: 12px;
+}
+
+/* Ítem individual de usuario */
+#listaUsuarios li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f8f8ff;
+    margin-bottom: 6px;
+    font-size: .88rem;
+    border: 1px solid #eee;
+}
+
+/* Información del usuario (nombre + email en columna) */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-info strong { color: #333; }
+.user-info small  { color: #999; font-size: .78rem; }
+
+/* Botón eliminar usuario individual */
+.btn-del {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: .85rem;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: color .2s, background .2s;
+}
+
+.btn-del:hover {
+    color: var(--color-error);
+    background: #ffebee;
+}
+
+/* Mensaje cuando no hay usuarios registrados */
+.no-users {
+    color: #aaa;
+    font-size: .85rem;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Botón para eliminar todos los usuarios */
+.btn-clear {
+    width: 100%;
+    padding: 9px;
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: .85rem;
+    color: #999;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.btn-clear:hover {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background: #ffebee;
+}

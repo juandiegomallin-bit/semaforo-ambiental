@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     PÁGINA: Inicio Principal
+     PROYECTO: Semáforo Ambiental de la Huerta
+     INSTITUCIÓN: I.E. República de Uruguay – Medellín, Antioquia
+     DESCRIPCIÓN: Página de inicio con sección hero, logo
+                  grande, slogan y tarjetas informativas sobre
+                  el proyecto (Alcance y Políticas de Calidad).
+     RUTAS RELATIVAS:
+       IMG  → ../img/logo.jpeg
+     ÚLTIMA ACTUALIZACIÓN: 2026
+============================================================ -->
+<html lang="es">
+<head>
+  <!-- Codificación y diseño responsivo -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semáforo Ambiental de la Huerta</title>
+
+  <!-- Fuente Roboto desde Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset y fuente base ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4faf2;
+      color: #2d2d2d;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ════════════════════════
+       BARRA DE NAVEGACIÓN FIJA
+    ════════════════════════ */
+    .barra-navegacion {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: #1a5214;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 30px;
+      z-index: 1000;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.35);
+      height: 60px;
+    }
+
+    /* Marca/logo en la barra de navegación */
+    .nav-marca { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .nav-marca img { height: 44px; width: 44px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.35); }
+    .nav-marca span { color: white; font-weight: 700; font-size: 0.92em; line-height: 1.2; max-width: 150px; }
+
+    /* Menú de enlaces de navegación */
+    .nav-enlaces { display: flex; gap: 3px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-enlaces a { color: rgba(255,255,255,0.88); text-decoration: none; padding: 6px 11px; border-radius: 6px; font-size: 0.83em; font-weight: 500; transition: background-color 0.2s, color 0.2s; white-space: nowrap; }
+    .nav-enlaces a:hover { background-color: rgba(255,255,255,0.18); color: white; }
+
+    /* ════════════════════════
+       SECCIÓN HERO (banner principal)
+    ════════════════════════ */
+    .hero {
+      margin-top: 60px; /* Compensa la barra fija */
+      background: linear-gradient(135deg, #1a5214 0%, #2d8020 55%, #6abf57 100%);
+      padding: 75px 70px 110px 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Círculo decorativo superior derecho */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 350px; height: 350px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    /* Curva blanca en la parte inferior del hero */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 65px;
+      background-color: #f4faf2;
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+
+    /* Texto del lado izquierdo del hero */
+    .hero-texto { color: white; max-width: 560px; position: relative; z-index: 1; }
+
+    /* Etiqueta pequeña sobre el título */
+    .hero-etiqueta {
+      display: inline-block;
+      background-color: rgba(255,255,255,0.18);
+      color: white;
+      padding: 5px 16px;
+      border-radius: 30px;
+      font-size: 0.78em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* Título principal del hero */
+    .hero-titulo { font-size: 2.9em; font-weight: 900; line-height: 1.1; margin-bottom: 14px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+
+    /* Slogan en cursiva */
+    .hero-slogan { font-size: 1.1em; font-style: italic; font-weight: 400; opacity: 0.92; margin-bottom: 10px; color: #d4f7c5; }
+
+    /* Descripción breve del proyecto */
+    .hero-subtitulo { font-size: 0.97em; line-height: 1.75; opacity: 0.82; font-weight: 300; margin-bottom: 32px; }
+
+    /* Botón de llamada a la acción */
+    .hero-boton {
+      display: inline-block;
+      background-color: white;
+      color: #1a5214;
+      padding: 13px 32px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.95em;
+      text-decoration: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+      font-family: 'Roboto', sans-serif;
+    }
+    .hero-boton:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.28); }
+
+    /* Contenedor del logo circular en el hero */
+    .hero-logo-contenedor { flex-shrink: 0; position: relative; z-index: 1; }
+
+    /* Logo grande circular con borde y sombra */
+    .hero-logo {
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      object-fit: contain;
+      background-color: white;
+      padding: 18px;
+      border: 4px solid rgba(255,255,255,0.5);
+      box-shadow: 0 12px 45px rgba(0,0,0,0.3);
+      display: block;
+    }
+
+    /* ════════════════════════
+       SECCIÓN DE TARJETAS INFORMATIVAS
+    ════════════════════════ */
+    .seccion-info { flex: 1; padding: 60px 50px 50px 50px; }
+
+    /* Encabezado de la sección */
+    .seccion-encabezado { text-align: center; margin-bottom: 44px; }
+    .seccion-encabezado h2 { font-size: 1.75em; font-weight: 700; color: #1a5214; margin-bottom: 8px; }
+    .seccion-encabezado p { font-size: 0.97em; color: #666; font-weight: 300; }
+
+    /* Línea decorativa verde */
+    .linea-decorativa {
+      width: 55px; height: 4px;
+      background: linear-gradient(to right, #9dde89, #1a5214);
+      border-radius: 2px;
+      margin: 10px auto 0 auto;
+    }
+
+    /* Cuadrícula de tarjetas responsiva */
+    .cuadricula-tarjetas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Tarjeta individual con borde verde superior */
+    .tarjeta {
+      background: white;
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-top: 5px solid #9dde89;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tarjeta:hover { transform: translateY(-7px); box-shadow: 0 12px 32px rgba(0,0,0,0.13); }
+
+    /* Barra de color decorativa dentro de la tarjeta */
+    .tarjeta-barra { width: 38px; height: 5px; background: linear-gradient(to right, #9dde89, #2d8020); border-radius: 3px; margin-bottom: 18px; }
+
+    .tarjeta h3 { font-size: 1.12em; font-weight: 700; color: #1a5214; margin-bottom: 12px; }
+    .tarjeta p { font-size: 0.93em; line-height: 1.75; color: #555; font-weight: 300; }
+
+    /* ════════════════════════
+       PIE DE PÁGINA
+    ════════════════════════ */
+    .pie-pagina { background-color: #1a5214; color: white; text-align: center; padding: 28px 20px 18px 20px; }
+
+    /* Íconos de redes sociales */
+    .iconos-redes { display: flex; justify-content: center; gap: 12px; margin-bottom: 14px; }
+    .iconos-redes a { color: white; text-decoration: none; width: 42px; height: 42px; background-color: rgba(255,255,255,0.14); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.88em; border: 1px solid rgba(255,255,255,0.18); transition: background-color 0.2s, transform 0.2s; }
+    .iconos-redes a:hover { background-color: rgba(255,255,255,0.28); transform: scale(1.1); }
+    .pie-pagina p { font-size: 0.8em; opacity: 0.7; font-weight: 300; }
+
+    /* ── Responsividad para pantallas pequeñas ── */
+    @media screen and (max-width: 820px) {
+      .hero { flex-direction: column-reverse; text-align: center; padding: 50px 30px 90px 30px; gap: 30px; }
+      .hero-texto { max-width: 100%; }
+      .hero-logo { width: 200px; height: 200px; }
+      .barra-navegacion { flex-direction: column; height: auto; padding: 10px 15px; gap: 8px; }
+      .seccion-info { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════
+       BARRA DE NAVEGACIÓN FIJA
+       Contiene logo y menú de enlaces
+  ════════════════════════════════════ -->
+  <nav class="barra-navegacion" aria-label="Menú principal">
+    <!-- Enlace de marca con logo -->
+    <a href="index.html" class="nav-marca">
+      <img src="../img/logo.jpeg" alt="Logo Semáforo Ambiental de la Huerta">
+      <span>Semáforo Ambiental de la Huerta</span>
+    </a>
+
+    <!-- Menú de navegación -->
+    <div class="nav-enlaces">
+      <a href="indexprincipal.html">Inicio</a>
+      <a href="quienes-somos.html">Quiénes Somos</a>
+      <a href="fundamentos.html">Fundamentos</a>
+      <a href="galeria.html">Galería</a>
+      <a href="contacto.html">Contactos</a>
+      <a href="nuestras-politicas.html">Nuestras Políticas</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="novedades.html">Novedades</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════
+       SECCIÓN HERO
+       Banner principal con logo, título,
+       slogan, descripción y botón CTA
+  ════════════════════════════════════ -->
+  <section class="hero" aria-label="Presentación del proyecto">
+
+    <!-- Texto descriptivo del proyecto -->
+    <div class="hero-texto">
+      <!-- Etiqueta institucional -->
+      <span class="hero-etiqueta">I.E. República de Uruguay</span>
+
+      <!-- Título principal -->
+      <h1 class="hero-titulo">Semáforo Ambiental de la Huerta</h1>
+
+      <!-- Slogan del proyecto -->
+      <p class="hero-slogan">"Cultivando conciencia para cuidar el planeta."</p>
+
+      <!-- Descripción breve -->
+      <p class="hero-subtitulo">
+        Un espacio para aprender y cuidar nuestro entorno de manera sencilla y efectiva.
+        Descubre cómo la educación agroecológica puede transformar nuestra comunidad escolar.
+      </p>
+
+      <!-- Botón que lleva a "Quiénes Somos" -->
+      <a href="quienes-somos.html" class="hero-boton">Conócenos</a>
+    </div>
+
+    <!-- Logo circular grande del proyecto -->
+    <div class="hero-logo-contenedor">
+      <img src="../img/logo.jpeg"
+           alt="Semáforo Ambiental de la Huerta"
+           class="hero-logo">
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       SECCIÓN PRINCIPAL: Tarjetas informativas
+       Muestra Alcance y Políticas de Calidad
+  ════════════════════════════════════ -->
+  <main class="seccion-info">
+    <!-- Encabezado de la sección -->
+    <div class="seccion-encabezado">
+      <h2>Sobre el Proyecto</h2>
+      <p>Conoce nuestros compromisos y el alcance de nuestra iniciativa educativa</p>
+      <div class="linea-decorativa" aria-hidden="true"></div>
+    </div>
+
+    <!-- Cuadrícula con tarjetas de información -->
+    <div class="cuadricula-tarjetas">
+
+      <!-- Tarjeta 1: Alcance del proyecto -->
+      <div class="tarjeta">
+        <div class="tarjeta-barra" aria-hidden="true"></div>
+        <h3>Alcance</h3>
+        <p>El proyecto incluye actividades educativas en el huerto escolar, talleres de sensibilización
+           y la participación de la comunidad en iniciativas ecológicas. También busca alianzas con
+           entidades externas para fortalecer su sostenibilidad e integra la huerta al currículo
+           escolar como espacio de aprendizaje práctico e interdisciplinario.</p>
+      </div>
+
+      <!-- Tarjeta 2: Políticas de calidad -->
+      <div class="tarjeta">
+        <div class="tarjeta-barra" aria-hidden="true"></div>
+        <h3>Políticas de Calidad</h3>
+        <p>Nos comprometemos a ofrecer una formación educativa de excelencia, integrando la teoría
+           y la práctica en el huerto escolar, asegurando que cada actividad contribuya al desarrollo
+           integral de los estudiantes y al respeto por el medio ambiente. Implementamos procesos
+           para la mejora continua de nuestras prácticas.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ════════════════════════════════════
+       PIE DE PÁGINA
+       Redes sociales y copyright
+  ════════════════════════════════════ -->
+  <footer class="pie-pagina">
+    <!-- Íconos de redes sociales (SVG inline) -->
+    <div class="iconos-redes" aria-label="Redes sociales">
+      <a href="#" title="Facebook" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="#" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+      <a href="#" title="YouTube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+      </a>
+      <a href="#" title="WhatsApp" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      </a>
+    </div>
+    <!-- Texto de copyright -->
+    <p>© 2026 Semáforo Ambiental de la Huerta · I.E. República de Uruguay · Medellín, Antioquia</p>
+  </footer>
+
+</body>
+</html>
